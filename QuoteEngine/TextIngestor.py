@@ -23,7 +23,7 @@ class TextIngestor(IngestorInterface):
         """
         quotes = []
         try:
-            with open(path, 'r') as file_ref:
+            with open(path, 'r', encoding='utf-8') as file_ref:
                 for line in file_ref.readlines():
                     line = line.strip('\n\r').strip()
                     if len(line) > 0:

@@ -29,4 +29,13 @@ class QuoteModel:
         return self.quote_author
 
     def __repr__(self):
+        """
+        System representation of model object
+        """
         return f'<{self.quote_body}, {self.quote_author}>'
+
+    def __str__(self):
+        """
+        Print contents of model instance as "body text - author"
+        """
+        return f'{self.quote_body} - {self.quote_author}'

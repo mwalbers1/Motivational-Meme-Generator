@@ -18,7 +18,7 @@ class CSVIngestor(IngestorInterface):
         Parse body and author of motivation quotes from the CSV file located at path parameter. Store each record into
         QuoteModel object which has the body and author properties.
 
-        :param path: Path to the CSV file continaing motivational quotes
+        :param path: Path to the CSV file containing motivational quotes
 
         returns: List of Quote objects in which each record in file is stored into a quote object
         """
