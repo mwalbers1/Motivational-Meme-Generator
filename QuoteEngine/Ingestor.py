@@ -1,8 +1,8 @@
-"""Contains Ingestor class which serves as a container object of each type of ingestor oject.
+"""Contains Ingestor class which serves as a container object.
 
-The Ingestor class holds a collection of ingestors for each file type (docx,csv,pdf,txt). Ingestor class then
-calls parse method for the ingestor object that's responsible for parsing the file located at path
-parameter.
+The Ingestor class holds a collection of ingestors for each file type (docx,csv,pdf,txt).
+Ingestor class then calls parse method for the ingestor object that's responsible for
+parsing the file located at path parameter.
 """
 from typing import List
 
@@ -17,8 +17,8 @@ from QuoteEngine.TextIngestor import TextIngestor
 class Ingestor(IngestorInterface):
     """Ingestor class inherits from the IngestorInterface abstract class.
 
-    Ingestor class encapsulates all the ingestors to provide a single interface to load any
-    suppored file type.
+    Ingestor class encapsulates all the ingestors to provide a single interface
+    to load any suppored file type.
     """
 
     allowed_extensions = ['docx', 'csv', 'pdf', 'txt']
@@ -26,7 +26,8 @@ class Ingestor(IngestorInterface):
 
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
-        """Call parse method on the Ingestor strategy object for specific file specified by the path parameter.
+        """Call parse method on the Ingestor strategy object for specific file
+        specified by the path parameter.
 
         :param path: Path to the source file containing motivational quotes.
 

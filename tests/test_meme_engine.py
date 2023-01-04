@@ -75,7 +75,8 @@ class TestMemeGenerator(unittest.TestCase):
         img.close()
 
     def test_create_image_meme_csv(self):
-        """Test for creating image from motivational quote from CSV file."""
+        """Test for creating image from motivational quote
+        from CSV file."""
         quotes = []
         quote_file = './_data/DogQuotes/DogQuotesCSV.csv'
         quotes.extend(Ingestor.parse(quote_file))
@@ -106,7 +107,7 @@ class TestMemeGenerator(unittest.TestCase):
         images_path = "./_data/photos/dog/"
         imgs_list = []
 
-        # Use the python standard library os class to find all images within the images images_path directory
+        # Find all images within the images images_path directory
         for root, _, files in os.walk(images_path):
             for file_name in files:
                 imgs_list.append(os.path.join(root, file_name))

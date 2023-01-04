@@ -1,6 +1,7 @@
-"""The Meme Engine module is responsible for creating new images from a source image and a motivational quote.
+"""The Meme Engine module is responsible for creating new meme images.
 
-The `MemeEngine` class represents a Meme Engine which has methods for making a meme.
+The `MemeEngine` class represents a Meme Engine which has methods for
+making a meme.
 """
 from PIL import Image, ImageDraw, ImageFont
 from PIL.Image import Resampling
@@ -10,9 +11,10 @@ from datetime import datetime
 class MemeEngine:
     """Meme Engine.
 
-    The meme engine will load an image source file from disk and then transform the source image by resizing
-    it to max width of 500px, and add a caption to the image with the quote body and author. It then
-    saves it to a new image file in an output folder.
+    The meme engine will load an image source file from disk and then transform
+    the source image by resizing it to max width of 500px, and add a caption to
+    the image with the quote body and author. It then saves it to a new image
+    file in an output folder.
     """
 
     def __init__(self, output_dir):
@@ -23,7 +25,7 @@ class MemeEngine:
         self.output_dir = output_dir
 
     def make_meme(self, img_path, message, author, width=500) -> str:
-        """Generate image with motiviation text. Returns the path to the manipulated image.
+        """Generate image with motiviation text.
 
         :param img_path: path to original image.
         :param message: motiviational text to apply to image.
@@ -69,7 +71,7 @@ class MemeEngine:
     def create_output_filename(self):
         """Create full path to new image output file.
 
-        :return: full path of where to store the new image output file.
+        :return: full path of the new image output file.
         """
         prefix_file_name = 'Output-'
         img_extension = ".jpg"

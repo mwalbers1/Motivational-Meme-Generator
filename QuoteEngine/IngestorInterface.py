@@ -1,7 +1,8 @@
 """This module contains the abstract IngestorInterface class.
 
-The IngestorInterface class is the superclass to the Ingestor class. It provides the abstract parse method
-that must be implemented by the subclass.
+The IngestorInterface class is the superclass to the Ingestor class.
+It provides the abstract parse method that must be implemented
+by the subclass.
 """
 from abc import ABC, abstractmethod
 from typing import List
@@ -9,17 +10,17 @@ from QuoteEngine.QuoteModel import QuoteModel
 
 
 class IngestorInterface(ABC):
-    """An abstract base class to implement the Strategy object design pattern.
+    """An abstract base class used for Strategy object design pattern.
 
-    Subclasses of this class will implement parse method for its specific file type
-    such as Text, PDF, Docx, and CSV.
+    Subclasses of this class will implement parse method for its specific
+    file type such as Text, PDF, Docx, and CSV.
     """
 
     allowed_extensions = []
 
     @classmethod
     def can_ingest(cls, path: str) -> bool:
-        """Return boolean flag whether the path to the file can be ingested by the instance subclass.
+        """Return True/False if file can be ingested by the instance subclass.
 
         :param path: Path to file containing motivational quotes.
 
@@ -32,13 +33,13 @@ class IngestorInterface(ABC):
     @classmethod
     @abstractmethod
     def parse(cls, path: str) -> List[QuoteModel]:
-        """Abstract method which must be implmeneted by subclass of IngestorInterface class.
+        """Abstract method which must be implmeneted by subclasses.
 
         Parses file located at path parameter for the motivational quotes.
 
         :param path: file path to motiviation quotes file.
 
-        :returns List[QuoteModel]: List of Quote objects in which each Quote object represents single record from
-        motivational quote file.
+        :returns List[QuoteModel]: List of Quote objects in which each Quote object
+        represents single record from motivational quote file.
         """
         return

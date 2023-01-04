@@ -23,7 +23,8 @@ class TestQuoteEngine(unittest.TestCase):
     """
     Unit tests for the Quote Engine Module.
 
-    TestQuoteEngine includes tests for the CSV, Docx, PDF, and Text Strategy Ingestor objects.
+    TestQuoteEngine includes tests for the CSV, Docx, PDF, and Text
+    Strategy Ingestor objects.
     """
 
     @classmethod
