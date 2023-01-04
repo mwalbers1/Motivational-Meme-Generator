@@ -34,11 +34,11 @@ class TextIngestor(IngestorInterface):
                         parsed = line.replace('"', "").split(' - ')
                         new_quote = QuoteModel(parsed[0], parsed[1])
                         quotes.append(new_quote)
+
+            return quotes
         except FileNotFoundError as fe:
             print(fe)
         except OSError as ose:
             print(ose)
         except Exception as ex:
             print(ex)
-
-        return quotes

@@ -8,16 +8,22 @@ Invoke the Flask server with this command:
 import random
 import os
 import requests
+import datetime
 from flask import Flask, render_template, abort, request
 
 # Import Ingestor and MemeEngine classes
 from QuoteEngine.Ingestor import Ingestor
-from QuoteEngine.QuoteModel import QuoteModel
 from MemeGenerator.MemeEngine import MemeEngine
+
 
 app = Flask(__name__)
 
-meme = MemeEngine('./static')
+# create default output image name
+outfile_prefix = 'output-image-'
+outfile_suffix = datetime.datetime.now().strftime('%Y%m%d-%H%M%d')+'.jpg'
+output_fullname = './static/'+outfile_prefix+outfile_suffix
+
+meme = MemeEngine(output_fullname)
 
 
 def setup():
@@ -34,9 +40,9 @@ def setup():
             quotes_list.extend(Ingestor.parse(f))
 
     images_path = "./_data/photos/dog/"
-    imgs_list = None
+    imgs_list = []
 
-    # Use the pythons standard library os class to find all images within the images images_path directory
+    # Use the python standard library os class to find all images within the images images_path directory
     for root, _, files in os.walk(images_path):
         for file_name in files:
             imgs_list.append(os.path.join(root, file_name))
@@ -57,7 +63,9 @@ def meme_rand():
     """
     img = random.choice(imgs)
     quote = random.choice(quotes)
+
     path = meme.make_meme(img, quote.body, quote.author)
+
     out_rel_path = os.path.relpath(path)
 
     return render_template('meme.html', path=out_rel_path)
@@ -73,14 +81,33 @@ def meme_form():
 def meme_post():
     """Create a user defined meme.
 
-    # @TODO:
     1. Use requests to save the image from the image_url form param to a temp local file.
     2. Use the meme object to generate a meme using this temp file and the body and author form paramaters.
     3. Remove the temporary saved image.
     """
-    path = None
+    tmp_img_path = f'./tmp/{random.randint(0, 100000000)}.jpg'
 
-    return render_template('meme.html', path=path)
+    image_url = request.form['image_url']
+    r = requests.get(image_url, stream=True)
+
+    with open(tmp_img_path, 'wb') as temp_img_file:
+        temp_img_file.write(r.content)
+
+    quote_body = request.form['body']
+    if quote_body is None:
+        quote_body = "Today is a trip to dog park"
+
+    quote_author = request.form['author']
+    if quote_author is None:
+        quote_author = "Tommy"
+
+    path_meme_img = meme.make_meme(tmp_img_path, quote_body, quote_author)
+    os.remove(tmp_img_path)
+
+    # remove leading dot character from path
+    url_path_meme_img = path_meme_img.replace("./", "/")
+
+    return render_template('meme.html', path=url_path_meme_img)
 
 
 if __name__ == "__main__":

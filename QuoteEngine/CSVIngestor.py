@@ -37,8 +37,8 @@ class CSVIngestor(IngestorInterface):
             for index, row in df.iterrows():
                 new_quote = QuoteModel(row['body'], row['author'])
                 quotes.append(new_quote)
+
+            return quotes
         except Exception as excep:
             print(excep)
             print(f"Error occurred in reading file at {path}")
-
-        return quotes

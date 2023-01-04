@@ -55,11 +55,10 @@ class PDFIngestor(IngestorInterface):
                         quotes.append(new_quote)
 
             os.remove(tmp)
+            return quotes
         except FileNotFoundError as fe:
             print(fe)
         except OSError as ose:
             print(ose)
         except Exception as ex:
             print(ex)
-
-        return quotes

@@ -38,8 +38,8 @@ class DocxIngestor(IngestorInterface):
                     parse = para.text.split('-')
                     new_quote = QuoteModel(parse[0], parse[1])
                     quotes.append(new_quote)
+
+            return quotes
         except Exception as exc:
             print(exc)
             print(f"Issue parsing Docx file at {path}")
-
-        return quotes

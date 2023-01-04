@@ -21,6 +21,7 @@ class Ingestor(IngestorInterface):
     suppored file type.
     """
 
+    allowed_extensions = ['docx', 'csv', 'pdf', 'txt']
     ingestors = [DocxIngestor, CSVIngestor, PDFIngestor, TextIngestor]
 
     @classmethod
