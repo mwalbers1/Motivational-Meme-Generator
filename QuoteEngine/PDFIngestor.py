@@ -1,3 +1,8 @@
+"""The PDF ingestor module is responsible for parsing motivational quotes from a PDF file.
+
+The PDFIngesor class parses input PDF file(s) for the body and author of each motivational quote
+record.
+"""
 import os
 import pathlib
 import random
@@ -9,19 +14,19 @@ from QuoteEngine.QuoteModel import QuoteModel
 
 
 class PDFIngestor(IngestorInterface):
-    """
-    Read motivational quotes from PDF file and then parse into python QuoteModel objects.  Each QuoteModel object
-    represents a record from the input PDF file
+    """Read motivational quotes from PDF file.
+
+    Parse quote records into QuoteModel objects. Each QuoteModel object
+    represents a record from the input PDF file.
     """
 
     allowed_extensions = ['pdf']
 
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
-        """
-        Parse PDF file specified by path parameter
+        """Parse PDF file specified by path parameter.
 
-        :param path: file path of PDF file consisting of the motivational quote records
+        :param path: file path of PDF file consisting of the motivational quote records.
         """
         if not cls.can_ingest(path):
             raise Exception('Cannot Ingest Exception')

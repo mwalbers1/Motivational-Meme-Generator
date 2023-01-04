@@ -1,28 +1,36 @@
+"""The Meme Engine module is responsible for creating new images from a source image and a motivational quote.
+
+The `MemeEngine` class represents a Meme Engine which has methods for making a meme.
+"""
 from PIL import Image, ImageDraw, ImageFont
 from PIL.Image import Resampling
-
 from datetime import datetime
 
 
 class MemeEngine:
-    def __init__(self, output_dir):
-        """
-        Intialize class instance with output directory for new image
+    """Meme Engine.
 
-        :param output_dir: path to new image
+    The meme engine will load an image source file from disk and then transform the source image by resizing
+    it to max width of 500px, and add a caption to the image with the quote body and author. It then
+    saves it to a new image file in an output folder.
+    """
+
+    def __init__(self, output_dir):
+        """Intialize class instance with output directory for new image.
+
+        :param output_dir: path to new image.
         """
         self.output_dir = output_dir
 
     def make_meme(self, img_path, message, author, width=500) -> str:
-        """
-        Generates image with motiviation text. Returns the path to the manipulated image
+        """Generate image with motiviation text. Returns the path to the manipulated image.
 
-        :param img_path: path to original image
-        :param message: motiviational text to apply to image
-        :param author: author of motivational text
-        :param width: width of resized image
+        :param img_path: path to original image.
+        :param message: motiviational text to apply to image.
+        :param author: author of motivational text.
+        :param width: width of resized image.
 
-        :return: Output directory to new image file
+        :return: Output directory to new image file.
         """
         try:
             img = Image.open(img_path)
@@ -59,10 +67,9 @@ class MemeEngine:
             print('Exception occurred in make_meme function:', exc)
 
     def create_output_filename(self):
-        """
-        Creates full path to new image output file
+        """Create full path to new image output file.
 
-        :return: full path of where to store the new image output file
+        :return: full path of where to store the new image output file.
         """
         prefix_file_name = 'Output-'
         img_extension = ".jpg"

@@ -1,1 +1,2 @@
+"""The Meme Engine package."""
 

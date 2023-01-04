@@ -1,3 +1,8 @@
+"""The CSV ingestor module is responsible for parsing motivational quotes from a CSV file.
+
+The CSVIngesor class parses input CSV file(s) for the body and author of each motivational quote
+record.
+"""
 from typing import List
 import pandas
 
@@ -6,21 +11,19 @@ from QuoteEngine.QuoteModel import QuoteModel
 
 
 class CSVIngestor(IngestorInterface):
-    """
-    Responsible for parsing motivational quotes stored in CSV files
-    """
+    """Responsible for parsing motivational quotes stored in CSV files."""
 
     allowed_extensions = ['csv']
 
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
-        """
-        Parse body and author of motivation quotes from the CSV file located at path parameter. Store each record into
-        QuoteModel object which has the body and author properties.
+        """Parse body and author of motivation quotes from the CSV file.
 
-        :param path: Path to the CSV file containing motivational quotes
+        Store each record into QuoteModel object which has the body and author properties.
 
-        returns: List of Quote objects in which each record in file is stored into a quote object
+        :param path: Path to the CSV file containing motivational quotes.
+
+        returns: List of Quote objects in which each record in file is stored into a quote object.
         """
         str_path = str(path)
         if not cls.can_ingest(str_path):

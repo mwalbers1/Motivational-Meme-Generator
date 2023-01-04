@@ -5,7 +5,6 @@ $ python -m unittest --verbose tests.test_quote_engine
 
 """
 import collections.abc
-import datetime
 import pathlib
 import unittest
 

@@ -1,0 +1,1 @@
+"""The Quote Engine package."""
