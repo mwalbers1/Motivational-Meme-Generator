@@ -13,18 +13,21 @@ from QuoteEngine.DocxIngestor import DocxIngestor
 from QuoteEngine.PDFIngestor import PDFIngestor
 from QuoteEngine.TextIngestor import TextIngestor
 
-TEST_DOG_CSV_FILE = pathlib.Path(__file__).parent.parent.resolve() / '_data' / 'DogQuotes' / 'DogQuotesCSV.csv'
-TEST_DOG_DOCX_FILE = pathlib.Path(__file__).parent.parent.resolve() / '_data' / 'DogQuotes' / 'DogQuotesDOCX.docx'
-TEST_DOG_PDF_FILE = pathlib.Path(__file__).parent.parent.resolve() / '_data' / 'DogQuotes' / 'DogQuotesPDF.pdf'
-TEST_DOG_TXT_fILE = pathlib.Path(__file__).parent.parent.resolve() / '_data' / 'DogQuotes' / 'DogQuotesTXT.txt'
+TEST_DOG_CSV_FILE = pathlib.Path(__file__).parent.parent.resolve() \
+                    / '_data' / 'DogQuotes' / 'DogQuotesCSV.csv'
+TEST_DOG_DOCX_FILE = pathlib.Path(__file__).parent.parent.resolve() \
+                     / '_data' / 'DogQuotes' / 'DogQuotesDOCX.docx'
+TEST_DOG_PDF_FILE = pathlib.Path(__file__).parent.parent.resolve() \
+                    / '_data' / 'DogQuotes' / 'DogQuotesPDF.pdf'
+TEST_DOG_TXT_fILE = pathlib.Path(__file__).parent.parent.resolve() \
+                    / '_data' / 'DogQuotes' / 'DogQuotesTXT.txt'
 
 
 class TestQuoteEngine(unittest.TestCase):
-    """
-    Unit tests for the Quote Engine Module.
+    """Unit tests for the Quote Engine Module.
 
-    TestQuoteEngine includes tests for the CSV, Docx, PDF, and Text
-    Strategy Ingestor objects.
+    TestQuoteEngine includes tests for the CSV, Docx, PDF,
+    and Text Strategy Ingestor objects.
     """
 
     @classmethod
@@ -47,33 +50,33 @@ class TestQuoteEngine(unittest.TestCase):
             return None
 
     def test_quotes_are_collection(self):
-        """Tests CSV quotes is a collection type."""
+        """Test CSV quotes is a collection type."""
         self.assertIsInstance(self.csv_quotes, collections.abc.Collection)
 
     def test_quotes_are_collection_docx(self):
-        """Tests Docx quotes is a collection type."""
+        """Test Docx quotes is a collection type."""
         self.assertIsInstance(self.docx_quotes, collections.abc.Collection)
 
     def test_quotes_are_collection_pdf(self):
-        """Tests PDF quotes is a collection type."""
+        """Test PDF quotes is a collection type."""
         self.assertIsInstance(self.pdf_quotes, collections.abc.Collection)
 
     def test_quotes_are_collection_txt(self):
-        """Tests Text quotes is a collection type."""
+        """Test Text quotes is a collection type."""
         self.assertIsInstance(self.txt_quotes, collections.abc.Collection)
 
     def test_quotes_contains_all_elements(self):
-        """Tests that CSV quotes collection contains all quotes."""
+        """Test CSV quotes collection contains all quotes."""
         self.assertEqual(len(self.csv_quotes), 2)
 
     def test_quotes_contains_all_elements_docx(self):
-        """Tests that Docx quotes collection contains all quotes."""
+        """Test Docx quotes collection contains all quotes."""
         self.assertEqual(len(self.docx_quotes), 4)
 
     def test_quotes_contains_all_elements_pdf(self):
-        """Tests that PDF quotes collection contains all quotes."""
+        """Test PDF quotes collection contains all quotes."""
         self.assertEqual(len(self.pdf_quotes), 3)
 
     def test_quotes_contains_all_elements_txt(self):
-        """Tests that Text quotes collection contains all quotes."""
+        """Test Text quotes collection contains all quotes."""
         self.assertEqual(len(self.txt_quotes), 3)

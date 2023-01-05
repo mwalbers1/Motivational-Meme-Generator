@@ -1,7 +1,8 @@
-"""The PDF ingestor module is responsible for parsing motivational quotes from a PDF file.
+"""The PDF ingestor module is responsible for parsing motivational quotes
+from a PDF file.
 
-The PDFIngesor class parses input PDF file(s) for the body and author of each motivational quote
-record.
+The PDFIngesor class parses input PDF file(s) for the body and author of
+each motivational quote record.
 """
 import os
 import pathlib
@@ -26,7 +27,8 @@ class PDFIngestor(IngestorInterface):
     def parse(cls, path: str) -> List[QuoteModel]:
         """Parse PDF file specified by path parameter.
 
-        :param path: file path of PDF file consisting of the motivational quote records.
+        :param path: file path of PDF file consisting of the
+                    motivational quote records.
         """
         if not cls.can_ingest(path):
             raise Exception('Cannot Ingest Exception')
@@ -39,9 +41,9 @@ class PDFIngestor(IngestorInterface):
             if ret_code == 1:
                 raise Exception("pdftotext - Error opening a PDF file.")
             elif ret_code == 2:
-                raise Exception("pdftotext - Error opening the output file.")
+                raise Exception("pdftotext - Error opening output file.")
             elif ret_code == 3:
-                raise Exception('pdftotext - Error related to PDF permissions.')
+                raise Exception('pdftotext - Error with PDF permissions.')
             elif ret_code == 99:
                 raise Exception('pdftotext - Other error occurred.')
 

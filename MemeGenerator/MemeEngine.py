@@ -64,9 +64,9 @@ class MemeEngine:
             img.save(self.output_dir)
             return self.output_dir
         except FileNotFoundError:
-            print(f"Image not file not found at {img_path}")
+            raise FileNotFoundError(f'Image file not found at {img_path}')
         except Exception as exc:
-            print('Exception occurred in make_meme function:', exc)
+            raise
 
     def create_output_filename(self):
         """Create full path to new image output file.
@@ -77,6 +77,8 @@ class MemeEngine:
         img_extension = ".jpg"
 
         now = datetime.now()
-        output_file_name = prefix_file_name + str(int(round(datetime.timestamp(now)))) + img_extension
+        output_file_name = prefix_file_name \
+            + str(int(round(datetime.timestamp(now)))) \
+            + img_extension
 
         return self.output_dir + '/' + output_file_name

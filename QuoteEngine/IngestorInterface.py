@@ -39,7 +39,7 @@ class IngestorInterface(ABC):
 
         :param path: file path to motiviation quotes file.
 
-        :returns List[QuoteModel]: List of Quote objects in which each Quote object
-        represents single record from motivational quote file.
+        :returns List[QuoteModel]: List of Quote objects in which each
+        Quote object represents single record from motivational quote file.
         """
         return

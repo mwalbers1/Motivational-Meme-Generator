@@ -1,8 +1,11 @@
 """Contains Ingestor class which serves as a container object.
 
-The Ingestor class holds a collection of ingestors for each file type (docx,csv,pdf,txt).
-Ingestor class then calls parse method for the ingestor object that's responsible for
-parsing the file located at path parameter.
+The Ingestor class holds a collection of ingestors for each
+file type (docx,csv,pdf,txt).
+
+Ingestor class then calls parse method for the ingestor
+object that's responsible for parsing the file located at
+path parameter.
 """
 from typing import List
 

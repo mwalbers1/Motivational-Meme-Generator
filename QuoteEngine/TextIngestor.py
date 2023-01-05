@@ -1,7 +1,7 @@
 """The Text ingestor module parses motivational quotes from a text file.
 
-The TextIngestor class parses the input text file(s) for the body and author
-of each motivational quote record.
+The TextIngestor class parses the input text file(s) for the body and
+author of each motivational quote record.
 """
 from typing import List
 
@@ -18,8 +18,8 @@ class TextIngestor(IngestorInterface):
     def parse(cls, path: str) -> List[QuoteModel]:
         """Parse body and author of motivation quotes from the Text file.
 
-        Store motivational quote records into a list of QuoteModel objects. A QuoteModel
-        contains body and author properties.
+        Store motivational quote records into a list of QuoteModel objects.
+        A QuoteModel contains body and author properties.
 
         :param path: Path to the Txt file continaing motivational quotes.
 

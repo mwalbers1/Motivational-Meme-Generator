@@ -1,5 +1,5 @@
 """
-The app module runs a Flask server to gernate a captined image.
+Runs a Flask server to gernate a captined image.
 
 Invoke the Flask server with this command:
 
@@ -8,20 +8,19 @@ Invoke the Flask server with this command:
 import random
 import os
 import requests
-import datetime
 from flask import Flask, render_template, abort, request
+from werkzeug.exceptions import HTTPException
 
 # Import Ingestor and MemeEngine classes
 from QuoteEngine.Ingestor import Ingestor
 from MemeGenerator.MemeEngine import MemeEngine
+import MemeGenerator.MemeHelpers as MemeHelpers
 
 
 app = Flask(__name__)
 
 # create default output image name
-outfile_prefix = 'output-image-'
-outfile_suffix = datetime.datetime.now().strftime('%Y%m%d-%H%M%d')+'.jpg'
-output_fullname = './static/'+outfile_prefix+outfile_suffix
+output_fullname = MemeHelpers.create_image_filename('./static/', 'Img')
 
 meme = MemeEngine(output_fullname)
 
@@ -42,7 +41,7 @@ def setup():
     images_path = "./_data/photos/dog/"
     imgs_list = []
 
-    # Use the python standard library os class to find all images within the images images_path directory
+    # Use os.walk() to find all images within the image path directory
     for root, _, files in os.walk(images_path):
         for file_name in files:
             imgs_list.append(os.path.join(root, file_name))
@@ -81,33 +80,54 @@ def meme_form():
 def meme_post():
     """Create a user defined meme.
 
-    1. Use requests to save the image from the image_url form param to a temp local file.
-    2. Use the meme object to generate a meme using this temp file and the body and author form paramaters.
+    1. Use requests to save the image from the image_url
+    form param to a temp local file.
+
+    2. Use the meme object to generate a meme using this
+    temp file and the body and author form paramaters.
+
     3. Remove the temporary saved image.
     """
-    tmp_img_path = f'./tmp/{random.randint(0, 100000000)}.jpg'
+    try:
+        tmp_img_path = f'./tmp/{random.randint(0, 100000000)}.jpg'
 
-    image_url = request.form['image_url']
-    r = requests.get(image_url, stream=True)
+        image_url = request.form['image_url']
+        r = requests.get(image_url, stream=True)
 
-    with open(tmp_img_path, 'wb') as temp_img_file:
-        temp_img_file.write(r.content)
+        with open(tmp_img_path, 'wb') as temp_img_file:
+            temp_img_file.write(r.content)
 
-    quote_body = request.form['body']
-    if quote_body is None:
-        quote_body = "Today is a trip to dog park"
+        quote_body = request.form['body']
+        if quote_body is None:
+            quote_body = "Today is a trip to dog park"
 
-    quote_author = request.form['author']
-    if quote_author is None:
-        quote_author = "Tommy"
+        quote_author = request.form['author']
+        if quote_author is None:
+            quote_author = "Tommy"
 
-    path_meme_img = meme.make_meme(tmp_img_path, quote_body, quote_author)
-    os.remove(tmp_img_path)
+        path_meme_img = meme.make_meme(tmp_img_path, quote_body, quote_author)
+        os.remove(tmp_img_path)
 
-    # remove leading dot character from path
-    url_path_meme_img = path_meme_img.replace("./", "/")
+        # remove leading dot character from path
+        url_path_meme_img = path_meme_img.replace("./", "/")
+        return render_template('meme.html', path=url_path_meme_img)
+    except FileNotFoundError as fexc:
+        abort(404, "Image URL not found.")
+    except Exception as exc:
+        if len(exc.args) > 0:
+            msg = exc.args[0]
+            result_match = MemeHelpers.match_jpg_extension(msg)
+            if result_match:
+                abort(404, "Image URL was not found. Try again.")
+            else:
+                abort(500, "Exception occurred in meme_post method.")
+        else:
+            abort(500, "Exception occurred in meme_post method.")
 
-    return render_template('meme.html', path=url_path_meme_img)
+
+@app.errorhandler(HTTPException)
+def handle_exception(e):
+    return render_template('error.html', error_msg=e)
 
 
 if __name__ == "__main__":
