@@ -7,6 +7,7 @@ $ python -m unittest --verbose tests.test_meme_engine
 from PIL import Image
 from QuoteEngine.Ingestor import Ingestor
 from MemeGenerator.MemeEngine import MemeEngine
+import MemeGenerator.MemeHelpers as MemeHelpers
 import unittest
 import os
 
@@ -22,7 +23,7 @@ class TestMemeGenerator(unittest.TestCase):
     def test_create_outputfile_name(self):
         """Test creation of random output file name."""
         meme = MemeEngine('./tmp')
-        output_file_name = meme.create_output_filename()
+        output_file_name = MemeHelpers.create_image_filename('./tmp/', 'Test')
         print(f'output_file_name is {output_file_name}')
         self.assertIsNotNone(output_file_name)
 

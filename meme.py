@@ -12,7 +12,6 @@ The script takes three optional CLI arguments:
 import os
 import random
 import argparse
-import datetime
 
 # Import Ingestor and MemeEngine classes
 from QuoteEngine.Ingestor import Ingestor

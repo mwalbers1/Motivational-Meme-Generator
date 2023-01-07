@@ -19,11 +19,6 @@ import MemeGenerator.MemeHelpers as MemeHelpers
 
 app = Flask(__name__)
 
-# create default output image name
-output_fullname = MemeHelpers.create_image_filename('./static/', 'Img')
-
-meme = MemeEngine(output_fullname)
-
 
 def setup():
     """Load all resources."""
@@ -60,6 +55,10 @@ def meme_rand():
     1. select a random image from imgs array.
     2. select a random quote from the quotes array.
     """
+    # create default output image name
+    output_fullname = MemeHelpers.create_image_filename('./static/', 'Img')
+    meme = MemeEngine(output_fullname)
+
     img = random.choice(imgs)
     quote = random.choice(quotes)
 
@@ -88,6 +87,14 @@ def meme_post():
 
     3. Remove the temporary saved image.
     """
+    # create default output image name
+    output_fullname = MemeHelpers.create_image_filename('./static/', 'Img')
+    meme = MemeEngine(output_fullname)
+
+    # User error message for 500 Internal server error
+    server_error_msg = "Please verify Image URL, Body, and \
+        Author form fields and try again."
+
     try:
         tmp_img_path = f'./tmp/{random.randint(0, 100000000)}.jpg'
 
@@ -106,7 +113,6 @@ def meme_post():
             quote_author = "Tommy"
 
         path_meme_img = meme.make_meme(tmp_img_path, quote_body, quote_author)
-        os.remove(tmp_img_path)
 
         # remove leading dot character from path
         url_path_meme_img = path_meme_img.replace("./", "/")
@@ -118,11 +124,15 @@ def meme_post():
             msg = exc.args[0]
             result_match = MemeHelpers.match_jpg_extension(msg)
             if result_match:
-                abort(404, "Image URL was not found. Try again.")
+                abort(404, "Invalid Image URL was entered. \
+                    Please try again.")
             else:
-                abort(500, "Exception occurred in meme_post method.")
+                abort(500, server_error_msg)
         else:
-            abort(500, "Exception occurred in meme_post method.")
+            abort(500, server_error_msg)
+    finally:
+        if os.path.exists(tmp_img_path):
+            os.remove(tmp_img_path)
 
 
 @app.errorhandler(HTTPException)

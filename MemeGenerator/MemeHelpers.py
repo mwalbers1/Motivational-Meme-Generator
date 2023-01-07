@@ -1,9 +1,11 @@
-"""Helper functions for MemeGenerator package
+"""Helper functions for the MemeGenerator package.
 
-Helper functions defined to help in creating new meme images.
+Helper functions called to help create new meme images.
 """
 import re
 import datetime
+import textwrap
+import math
 
 
 def match_jpg_extension(input_str):
@@ -32,3 +34,31 @@ def create_image_filename(folder, prefix):
     suffix += '.jpg'
     output_filename = folder + prefix + suffix
     return output_filename
+
+
+def wrap_body_text(body, author, width=500):
+    """Wrap body text based on width of image in pixels.
+    One character is equivalent to 8 pixels according to
+    https://www.unitconverters.net/typography/character-x-to-pixel-x.htm.
+
+    :param body: body caption text
+    :param author: author text
+    :param width: width of image in pixels
+
+    :return: wrapped text containing body and author.
+    """
+    # default number of pixels per character
+    default_char_pixels = 8
+
+    # offset to account for border edges
+    offset = 4
+
+    char_pixels_plus_offset = default_char_pixels + offset
+    line_char_width = math.floor(width / char_pixels_plus_offset)
+
+    full_quote = f'{body}\n - {author}'
+
+    wrapper = textwrap.TextWrapper(width=line_char_width)
+    formatted_body_text = wrapper.fill(text=full_quote)
+
+    return formatted_body_text
